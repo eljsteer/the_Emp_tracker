@@ -1,18 +1,9 @@
 const inquirer = require("inquirer");
 const mysql = require("mysql2");
-require("dotenv").config();
 const cTable = require('console.table');
 const Employee = require("./lib/organisation");
 const Role = require("./lib/organisation");
 const Department = require("./lib/organisation");
-
-const db = mysql.createConnection(
-  process.env.HOST,
-  process.env.DB_NAME,
-  process.env.DB_USER,
-  process.env.DB_PASSWORD,
-  console.log("Connected to the Tracker_DB"),
-)
 
 function validateInput(data) {
   if(data != "") {
