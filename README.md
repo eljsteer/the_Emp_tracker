@@ -1,6 +1,6 @@
 
   
-  <h1 align="center">Prof.-Genie<h1>
+  <h1 align="center">The EMP Tracker<h1>
 
   [![License](https://img.shields.io/badge/License-Apache_2.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
 
@@ -15,7 +15,8 @@
   - [Questions](#Questions)
 
   ## DESCRIPTION
-  Application to generate employee profiles which holds thier basic information.
+  This application keeps track of Employees and Organisation details.
+  It allows the user to view the organisational structure, roles, departments and individual employee details while also allowing the user to update and add details to the database.
   
   ## INSTALLATION
   1. Install NodeJS here: [Download NodeJS](https://nodejs.org/en/download/)
