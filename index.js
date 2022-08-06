@@ -2,9 +2,9 @@ const inquirer = require("inquirer");
 const mysql = require("mysql2");
 require("dotenv").config();
 const cTable = require('console.table');
-const Employee = require("./db/organisation");
-const Role = require("./db/organisation");
-const Department = require("./db/organisation");
+const Employee = require("./lib/organisation");
+const Role = require("./lib/organisation");
+const Department = require("./lib/organisation");
 
 const db = mysql.createConnection(
   process.env.HOST,
