@@ -13,4 +13,4 @@ dbConnect.connect = () => {
     console.log("Connected to the Tracker_DB")
 };
 
-module.exports = db;
+module.exports = dbConnect;
