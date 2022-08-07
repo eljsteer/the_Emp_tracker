@@ -44,7 +44,7 @@
   This application is licensed under the Apache 2.0 license.
 
   ## CREDITS
-  * https://www.wikihow.com/Create-an-Email-Link-in-HTML
+  * https://github.com/sidorares/node-mysql2/blob/master/documentation/Promise-Wrapper.md
   * https://flexiple.com/instanceof-javascript/
   * https://nodejs.org/docs/latest-v16.x/api/fs.html#fspromiseswritefilefile-data-options
 

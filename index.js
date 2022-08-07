@@ -1,13 +1,13 @@
 const inquirer = require("inquirer");
-const pool = require("./connection/connection");
+const db = require("./db/connection");
 const cTable = require('console.table');
-const Employee = require("./models/dbQuery");
-const Role = require("./models/dbQuery");
-const Department = require("./models/dbQuery");
+const Employee = require("./lib/dbQuery");
+const Role = require("./lib/dbQuery");
+const Department = require("./lib/dbQuery");
 
 
-function validateInput(data) {
-  if(data != "") {
+function validateInput(answers) {
+  if(answers != "") {
     return true;
   } else {
     return "Please enter a response to the query"
@@ -21,22 +21,25 @@ function mainMenu() {
       name: "mainMenu",
       message: "What Action Would You Like To Take?", 
       choices: [
-      "View All Employees", 
-      "Add Employee", 
-      "Update Employee Role",
-      "View All Roles",
-      "Add Job Role",
-      "View All Departments",
-      "Add Department",
-      "Update Manager",
-      "View Employees by Filter",
-      "Quit"
+        "View All Departments",
+        "View All Employees", 
+        "View All Roles",
+        "Add a Department",
+        "Add a Employee",
+        "Add a Role", 
+        "Update Employees Role",
+        "Update Employees Managers",
+        "View Employees by Manager",
+        "View Employees by Department",
+        "View Department by Budget",
+        "Delete a Employee, Role or Department",
+        "Quit"
       ],
       validate: validateInput,
     }
   ])
-    .then(data => {
-      switch (data.mainMenu) {
+    .then(mmData => {
+      switch (mmData.mainMenu) {
         case 'View All Employees':
           Employee.viewEmployees();
           break;
@@ -49,7 +52,7 @@ function mainMenu() {
         case 'View All Roles':
           Role.viewRoles();
           break;
-        case 'Add Job Role':
+        case 'Add Role':
           Role.addJobRole();
           break;
         case 'View All Departments':
@@ -79,56 +82,39 @@ addEmployee = () => {
       validate: validateInput,
       }, {
       type: "list",
-      name: "role",
-      message: "What is the Employee's Role.",
+      name: "empRole",
+      message: "What is the Employee's Role?",
       choices: [""],
       validate:validateInput,
       }, {
       type: "list",
-      name: "Manager",
-      message: "Who is the Employee's Manager.",
-
+      name: "manager",
+      message: "Who is the Employee's Manager?",
       validate:validateInput,
       },
-  ]).then((data)=> {
-    const intern = new Intern(data.name, data.id, data.email, data.intrnSchool);
+  ]).then((answers)=> {
+    const employee = new employee(answers.firstName, answers.lastName, answers.role, answers.manager);
     
-    if(data.addEmployee === "Yes") {
-      addEmployees();
-    } else if (data.addEmployee === "No") {
-      let dataInput = genieProfileHTML(team);
-      writeFile(dataInput);
-    } else {
-      console.log("error")
-    };
-  })
-}
+      mainMenu();
+    })
+};
 updateEmployeeRole = () => {
   return inquirer.prompt([
     {
       type: "list",
-      name: "empRole",
+      name: "updEmpRole",
       message: "What is the Role that you want to assign to the employee?", 
       validate: validateInput,
       },
-  ]).then((data)=> {
-    const intern = new Intern(data.name, data.id, data.email, data.intrnSchool);
-    team.push(intern);
-    if(data.addEmployee === "Yes") {
-      addEmployees();
-    } else if (data.addEmployee === "No") {
-      let dataInput = genieProfileHTML(team);
-      writeFile(dataInput);
-    } else {
-      console.log("error")
-    };
+  ]).then((answers)=> {
+    mainMenu();
   })
-}
+};
 addJobRole = () => {
   return inquirer.prompt([
     {
       type: "input",
-      name: "roleName",
+      name: "title",
       message: "What is the Name of the new Role?", 
       validate: validateInput,
       },
@@ -140,23 +126,14 @@ addJobRole = () => {
       },
     {
       type: "list",
-      name: "salary",
+      name: "roleDep",
       message: "Which department does the role belong to?", 
       validate: validateInput,
       },
-  ]).then((data)=> {
-    const intern = new Intern(data.name, data.id, data.email, data.intrnSchool);
-    team.push(intern);
-    if(data.addEmployee === "Yes") {
-      addEmployees();
-    } else if (data.addEmployee === "No") {
-      let dataInput = genieProfileHTML(team);
-      writeFile(dataInput);
-    } else {
-      console.log("error")
-    };
+  ]).then((answers)=> {
+      mainMenu();
   })
-}
+};
 addDepartment = () => {
   return inquirer.prompt([
     {
@@ -165,19 +142,10 @@ addDepartment = () => {
       message: "What is the Name of the new Department?", 
       validate: validateInput,
       },
-  ]).then((data)=> {
-    const intern = new Intern(data.name, data.id, data.email, data.intrnSchool);
-    team.push(intern);
-    if(data.addEmployee === "Yes") {
-      addEmployees();
-    } else if (data.addEmployee === "No") {
-      let dataInput = genieProfileHTML(team);
-      writeFile(dataInput);
-    } else {
-      console.log("error")
-    };
+  ]).then((answers)=> {
+      mainMenu();
   })
-}
+};
 
 function init() {
   mainMenu();
