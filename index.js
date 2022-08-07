@@ -1,10 +1,7 @@
 const inquirer = require("inquirer");
 const db = require("./db/connection");
 const cTable = require('console.table');
-const Employee = require("./lib/dbQuery");
-const Role = require("./lib/dbQuery");
-const Department = require("./lib/dbQuery");
-
+const { Employee, Role, Department } = require("./lib/dbQuery");
 
 function validateInput(answers) {
   if(answers != "") {
@@ -41,7 +38,7 @@ function mainMenu() {
     .then(mmData => {
       switch (mmData.mainMenu) {
         case 'View All Departments':
-          Department.viewDepartments();
+          viewDep();
           break;
         case 'View All Employees':
           Employee.viewEmployees();
@@ -161,6 +158,18 @@ addDepartment = () => {
       mainMenu();
   })
 };
+
+viewDep = async () => {
+  Department.viewDepartments(values)
+  console.log(values)
+  await ((values) => {
+  // const table = cTable.getTable(results);
+  // console.log(table);
+    console.table([values])
+  });
+};
+
+
 
 function init() {
   mainMenu();

@@ -10,8 +10,11 @@ const dbConnect = mysql.createConnection({
 );
 
 dbConnect.connect = () => {
-  if(err) {throw err;}
-    console.log("Connected to the Tracker_DB")
+  if(err) {
+    throw err;
+  } else {
+    console.log("Connected to the Tracker_DB");
+  };
 };
 
 module.exports = dbConnect;
