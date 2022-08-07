@@ -32,7 +32,7 @@ function mainMenu() {
         "View Employees by Manager",
         "View Employees by Department",
         "View Department by Budget",
-        "Delete a Employee, Role or Department",
+        "Delete an Employee, Role or Department",
         "Quit"
       ],
       validate: validateInput,
@@ -40,26 +40,41 @@ function mainMenu() {
   ])
     .then(mmData => {
       switch (mmData.mainMenu) {
+        case 'View All Departments':
+          Department.viewDepartments();
+          break;
         case 'View All Employees':
           Employee.viewEmployees();
-          break;
-        case 'Add Employee':
-          Employee.addEmployee();
-          break;
-        case 'Update Employee Role':
-          Employee.updateEmployeeRole();
           break;
         case 'View All Roles':
           Role.viewRoles();
           break;
+        case 'Add Department':
+          Department.addDepartment();
+          break;
+        case 'Add Employee':
+          Employee.addEmployee();
+          break;
         case 'Add Role':
           Role.addJobRole();
           break;
-        case 'View All Departments':
-          Department.viewDepartments();
+        case 'Update Employees Role':
+          Employee.updateEmpRole();
           break;
-        case 'Add Department':
-          Department.addDepartment();
+        case 'Update Employees Managers':
+          Employee.updateEmpManager();
+          break;
+        case 'View Employees by Manager':
+          Employee.viewEmpByMgmt();
+          break;
+        case 'View Employees by Department':
+          Employee.viewEmpByDep();
+          break;
+        case 'View Department Budget':
+          Employee.depBudget();
+          break;
+        case 'Delete an Employee, Role or Department':
+          Employee.deleteFunc();
           break;
         case 'Quit':
           exit();
