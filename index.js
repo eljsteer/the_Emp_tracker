@@ -159,12 +159,13 @@ addDepartment = () => {
   })
 };
 
-viewDep = async () => {
+viewDep = () => {
   let deptData = Department.viewDepartments();
   console.log("log", deptData);
-  await (([deptData]) => {
-    console.table(deptData);
-  });
+  console.log(cTable);
+  ([deptData]) => {
+    // console.table(deptData);
+  };
 };
 
 
