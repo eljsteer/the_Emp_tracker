@@ -159,13 +159,15 @@ addDepartment = () => {
   })
 };
 
-viewDep = () => {
-  let deptData = Department.viewDepartments();
-  console.log("log", deptData);
-  console.log(cTable);
-  ([deptData]) => {
-    // console.table(deptData);
-  };
+viewDep = async () => {
+  // let deptData = Department.viewDepartments();
+  // console.log("log", deptData);
+  db.query(`SELECT * FROM department`, function(err,values) {
+    console.log(values);
+    if (err) {
+      console.log(err)
+    } console.table(values);
+});
 };
 
 
