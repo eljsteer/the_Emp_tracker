@@ -1,9 +1,10 @@
 const inquirer = require("inquirer");
-const mysql = require("mysql2");
+const pool = require("./connection/connection");
 const cTable = require('console.table');
-const Employee = require("./lib/organisation");
-const Role = require("./lib/organisation");
-const Department = require("./lib/organisation");
+const Employee = require("./models/dbQuery");
+const Role = require("./models/dbQuery");
+const Department = require("./models/dbQuery");
+
 
 function validateInput(data) {
   if(data != "") {
@@ -28,7 +29,8 @@ function mainMenu() {
       "View All Departments",
       "Add Department",
       "Update Manager",
-      "View Employees by Filter"
+      "View Employees by Filter",
+      "Quit"
       ],
       validate: validateInput,
     }
@@ -56,9 +58,126 @@ function mainMenu() {
         case 'Add Department':
           Department.addDepartment();
           break;
+        case 'Quit':
+          exit();
+          break;
       };
     });
 };
+
+addEmployee = () => {
+  return inquirer.prompt([
+    {
+      type: "input",
+      name: "firstName",
+      message: "What is the First Name of the Employee?", 
+      validate: validateInput,
+      }, {
+      type: "input",
+      name: "lastName",
+      message: "What is the Last Name of the Employee?", 
+      validate: validateInput,
+      }, {
+      type: "list",
+      name: "role",
+      message: "What is the Employee's Role.",
+      choices: [""],
+      validate:validateInput,
+      }, {
+      type: "list",
+      name: "Manager",
+      message: "Who is the Employee's Manager.",
+
+      validate:validateInput,
+      },
+  ]).then((data)=> {
+    const intern = new Intern(data.name, data.id, data.email, data.intrnSchool);
+    
+    if(data.addEmployee === "Yes") {
+      addEmployees();
+    } else if (data.addEmployee === "No") {
+      let dataInput = genieProfileHTML(team);
+      writeFile(dataInput);
+    } else {
+      console.log("error")
+    };
+  })
+}
+updateEmployeeRole = () => {
+  return inquirer.prompt([
+    {
+      type: "list",
+      name: "empRole",
+      message: "What is the Role that you want to assign to the employee?", 
+      validate: validateInput,
+      },
+  ]).then((data)=> {
+    const intern = new Intern(data.name, data.id, data.email, data.intrnSchool);
+    team.push(intern);
+    if(data.addEmployee === "Yes") {
+      addEmployees();
+    } else if (data.addEmployee === "No") {
+      let dataInput = genieProfileHTML(team);
+      writeFile(dataInput);
+    } else {
+      console.log("error")
+    };
+  })
+}
+addJobRole = () => {
+  return inquirer.prompt([
+    {
+      type: "input",
+      name: "roleName",
+      message: "What is the Name of the new Role?", 
+      validate: validateInput,
+      },
+    {
+      type: "input",
+      name: "salary",
+      message: "What is the Salary of the new Role?", 
+      validate: validateInput,
+      },
+    {
+      type: "list",
+      name: "salary",
+      message: "Which department does the role belong to?", 
+      validate: validateInput,
+      },
+  ]).then((data)=> {
+    const intern = new Intern(data.name, data.id, data.email, data.intrnSchool);
+    team.push(intern);
+    if(data.addEmployee === "Yes") {
+      addEmployees();
+    } else if (data.addEmployee === "No") {
+      let dataInput = genieProfileHTML(team);
+      writeFile(dataInput);
+    } else {
+      console.log("error")
+    };
+  })
+}
+addDepartment = () => {
+  return inquirer.prompt([
+    {
+      type: "input",
+      name: "depName",
+      message: "What is the Name of the new Department?", 
+      validate: validateInput,
+      },
+  ]).then((data)=> {
+    const intern = new Intern(data.name, data.id, data.email, data.intrnSchool);
+    team.push(intern);
+    if(data.addEmployee === "Yes") {
+      addEmployees();
+    } else if (data.addEmployee === "No") {
+      let dataInput = genieProfileHTML(team);
+      writeFile(dataInput);
+    } else {
+      console.log("error")
+    };
+  })
+}
 
 function init() {
   mainMenu();

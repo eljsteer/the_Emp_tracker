@@ -1,25 +1,20 @@
-// const db = require("../index");
+const db = require("../connection/connection");
 const cTable = require('console.table');
-const mysql = require("mysql2");
-
-const db = mysql.createConnection(
-  {
-    host: "localhost"
-  },
-  process.env.DB_NAME,
-  process.env.DB_USER,
-  process.env.DB_PASSWORD,
-
-console.log("Connected to the Tracker_DB"),
-);
+const data = require("../index")
 
 class Employee {
 // Function to view all Employees 
 viewEmployees() {
   db.query("SELECT * FROM employee", function (err, results) {
+    console.table(results);
+  });
+};
+addEmployee() {
+  db.query("INSERT INTO tracker_db VALUES (?) FROM employee", data ,function (err, results) {
     console.log(results);
   });
 };
+
 };
 
 // viewEmployees = () => {

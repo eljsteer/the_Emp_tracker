@@ -3,6 +3,8 @@ CREATE DATABASE tracker_db;
 
 USE tracker_db;
 
+SELECT DATABASE();
+
 CREATE TABLE department (
   id INT AUTO_INCREMENT NOT NULL,
   dep_name VARCHAR(30),
