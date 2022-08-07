@@ -160,12 +160,10 @@ addDepartment = () => {
 };
 
 viewDep = async () => {
-  Department.viewDepartments(values)
-  console.log(values)
-  await ((values) => {
-  // const table = cTable.getTable(results);
-  // console.log(table);
-    console.table([values])
+  let deptData = Department.viewDepartments();
+  console.log("log", deptData);
+  await (([deptData]) => {
+    console.table(deptData);
   });
 };
 
