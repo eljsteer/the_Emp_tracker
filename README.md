@@ -45,7 +45,7 @@
 
   ## CREDITS
   * https://github.com/sidorares/node-mysql2/blob/master/documentation/Promise-Wrapper.md
-  * https://flexiple.com/instanceof-javascript/
+  * https://www.mysqltutorial.org/mysql-alias/
   * https://nodejs.org/docs/latest-v16.x/api/fs.html#fspromiseswritefilefile-data-options
 
 

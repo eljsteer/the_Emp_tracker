@@ -159,17 +159,13 @@ addDepartment = () => {
   })
 };
 
-viewDep = async () => {
-  // let deptData = Department.viewDepartments();
-  // console.log("log", deptData);
-  db.query(`SELECT * FROM department`, function(err,values) {
-    console.log(values);
-    if (err) {
-      console.log(err)
-    } console.table(values);
-});
+async function viewDep() {
+  let deptData = Department.viewDepartments();
+  console.log("log", deptData);
+  console.table(deptData);
 };
 
+// const Name = await dbQuery.function();
 
 
 function init() {
