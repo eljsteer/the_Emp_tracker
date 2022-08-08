@@ -1,7 +1,7 @@
 const inquirer = require("inquirer");
-const db = require("./db/connection");
+const dbConnect = require("./db/connection");
 const cTable = require('console.table');
-const { Employee, Role, Department } = require("./lib/dbQuery");
+const dbQuery = require("./lib/dbQuery");
 
 function validateInput(answers) {
   if(answers != "") {
@@ -160,9 +160,10 @@ addDepartment = () => {
 };
 
 async function viewDep() {
-  let deptData = Department.viewDepartments();
-  console.log("log", deptData);
-  console.table(deptData);
+  let depData = await dbQuery.viewDepartments();
+  console.log("log", depData);
+  console.table(depData[0]);
+  mainMenu();
 };
 
 // const Name = await dbQuery.function();
