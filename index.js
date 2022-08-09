@@ -30,7 +30,9 @@ function mainMenu() {
         "View Employees by Department",
         "View Department by Budget",
         "Delete an Employee, Role or Department",
-        "Quit"
+        new inquirer.Separator(),
+        "Quit",
+        new inquirer.Separator()
       ],
       validate: validateInput,
     }
@@ -41,37 +43,37 @@ function mainMenu() {
           viewDep();
           break;
         case 'View All Employees':
-          Employee.viewEmployees();
+          viewEmployees();
           break;
         case 'View All Roles':
-          Role.viewRoles();
+          viewRoles();
           break;
-        case 'Add Department':
-          Department.addDepartment();
+        case 'Add a Department':
+          addDepartment();
           break;
         case 'Add Employee':
-          Employee.addEmployee();
+          addEmployee();
           break;
         case 'Add Role':
-          Role.addJobRole();
+          addJobRole();
           break;
         case 'Update Employees Role':
-          Employee.updateEmpRole();
+          updateEmpRole();
           break;
         case 'Update Employees Managers':
-          Employee.updateEmpManager();
+          updateEmpManager();
           break;
         case 'View Employees by Manager':
-          Employee.viewEmpByMgmt();
+          viewEmpByMgmt();
           break;
         case 'View Employees by Department':
-          Employee.viewEmpByDep();
+          viewEmpByDep();
           break;
         case 'View Department Budget':
-          Employee.depBudget();
+          depBudget();
           break;
         case 'Delete an Employee, Role or Department':
-          Employee.deleteFunc();
+          deleteFunc();
           break;
         case 'Quit':
           exit();
@@ -79,6 +81,10 @@ function mainMenu() {
       };
     });
 };
+
+//------------------------------------------------->>
+// Functions to Display Tracker Tables & Process Data
+//=================================================>>
 
 addEmployee = () => {
   return inquirer.prompt([
@@ -146,24 +152,37 @@ addJobRole = () => {
       mainMenu();
   })
 };
-addDepartment = () => {
-  return inquirer.prompt([
+addDepartment = async () => {
+  try {
+  const answers = await inquirer.prompt([
     {
       type: "input",
       name: "depName",
       message: "What is the Name of the new Department?", 
       validate: validateInput,
       },
-  ]).then((answers)=> {
-      mainMenu();
-  })
+  ]);
+  console.log(answers);
+  await dbQuery.addDepartment([answers]);
+  } catch (err) {
+    console.log(err);
+  };
+  mainMenu();
 };
+
+// function promptDataHelper(answers) {
+//   let answerArray = [];
+//   answerArray.push(answers);
+// }
 
 async function viewDep() {
   let depData = await dbQuery.viewDepartments();
-  console.log("log", depData);
   console.table(depData[0]);
   mainMenu();
+};
+
+async function exit() {
+  return prompt.ui.close()
 };
 
 // const Name = await dbQuery.function();
