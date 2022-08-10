@@ -4,6 +4,8 @@
     "dotenv": "^16.0.1",
     "inquirer": "^8.2.4",
     "mysql2": "^2.3.0"
+  },
+  "scripts": {
+    "start": "node index.js"
   }
-  
 }
