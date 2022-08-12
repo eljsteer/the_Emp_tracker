@@ -93,7 +93,21 @@ async function viewDep() {
   mainMenu();
 };
 
-// Function to add a Department
+// Function to View all Roles
+async function viewRoles() {
+  let roleData = await dbQuery.viewRoles();
+  console.table(roleData[0]);
+  mainMenu();
+};
+
+// Function to View all Employees
+async function viewEmployees() {
+  let employeeData = await dbQuery.viewEmployees();
+  console.table(employeeData[0]);
+  mainMenu();
+};
+
+// Function to add a New Department
 addDepartment = async () => {
   try {
   const answers = await inquirer.prompt([
@@ -112,21 +126,7 @@ addDepartment = async () => {
   mainMenu();
 };
 
-// Function to View all Roles
-async function viewEmployees() {
-  let employeeData = await dbQuery.viewEmployees();
-  console.table(employeeData[0]);
-  mainMenu();
-};
-
-// Function to View all Roles
-async function viewRoles() {
-  let roleData = await dbQuery.viewRoles();
-  console.table(roleData[0]);
-  mainMenu();
-};
-
-// Function to add a Job Role
+// Function to add a New Job Role
 addJobRole = async () => {
   try {
   let depArr = await dbQuery.viewDepartments();
@@ -165,13 +165,10 @@ addEmployee = async () => {
   try {
     let roleArr = await dbQuery.viewRoles();
     roleOpt = roleArr[0].map(x => x.Title);
-    console.log(roleOpt);
     let mngrArr = await dbQuery.viewManagers();
-    console.log(mngrArr);
-    //   if(x.manager_id == null) {
-    //     x.concat(x.first_name,"",x.last_name)}
+    mngrOpt = mngrArr[0].map(x => x.ManagerName);
+    console.log(mngrOpt);
 
-    // );
     const answers = await inquirer.prompt([
     {
       type: "input",
@@ -190,15 +187,16 @@ addEmployee = async () => {
       choices: roleOpt,
       validate:validateInput,
       },
-      // {
-      // type: "list",
-      // name: "manager",
-      // message: "Who is the Employee's Manager?",
-      // choices: mngrOpt,
-      // validate:validateInput,
-      // },
+      {
+      type: "list",
+      name: "manager",
+      message: "Who is the Employee's Manager?",
+      choices: mngrOpt,
+      validate:validateInput,
+      },
   ]);
     console.log(answers);
+
     await dbQuery.addEmployee(answers);
   } catch (err) {
     console.log(err);
@@ -219,11 +217,6 @@ updateEmployeeRole = () => {
     mainMenu();
   })
 };
-
-// function promptDataHelper(answers) {
-//   let answerArray = [];
-//   answerArray.push(answers);
-// }
 
 async function exit() {
   return prompt.ui.close();
