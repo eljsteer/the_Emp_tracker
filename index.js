@@ -170,7 +170,8 @@ addEmployee = async () => {
     let roleArr = await dbQuery.viewRoles();
     roleOpt = roleArr[0].map(x => x.Title);
     let mngrArr = await dbQuery.viewManagers();
-    mngrOpt = mngrArr[0].map(x => x.ManagerName);
+    mngrOpt = mngrArr[0]
+    // .map(x => x.ManagerName);
     console.log(mngrOpt);
 
     const answers = await inquirer.prompt([
