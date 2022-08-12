@@ -89,6 +89,7 @@ function mainMenu() {
 // Function to View All Departments
 async function viewDep() {
   let depData = await dbQuery.viewDepartments();
+  console.log("\n");
   console.table(depData[0]);
   mainMenu();
 };
@@ -96,6 +97,7 @@ async function viewDep() {
 // Function to View all Roles
 async function viewRoles() {
   let roleData = await dbQuery.viewRoles();
+  console.log("\n");
   console.table(roleData[0]);
   mainMenu();
 };
@@ -103,6 +105,7 @@ async function viewRoles() {
 // Function to View all Employees
 async function viewEmployees() {
   let employeeData = await dbQuery.viewEmployees();
+  console.log("\n");
   console.table(employeeData[0]);
   mainMenu();
 };
@@ -118,8 +121,8 @@ addDepartment = async () => {
       validate: validateInput,
       },
   ]);
-  console.log(answers);
   await dbQuery.addDepartment([answers]);
+  console.log(`Added ${answers.depName} to the Database`);
   } catch (err) {
     console.log(err);
   };
@@ -154,6 +157,7 @@ addJobRole = async () => {
   ]);
   console.log(answers);
   await dbQuery.addJobRole(answers);
+  console.log(`Added ${answers.title} to the Database`);
   } catch (err) {
     console.log(err);
   };
@@ -196,8 +200,8 @@ addEmployee = async () => {
       },
   ]);
     console.log(answers);
-
     await dbQuery.addEmployee(answers);
+    console.log(`Added ${concat(answers.firstName, answers.lastName)} to the Database`);
   } catch (err) {
     console.log(err);
   };
