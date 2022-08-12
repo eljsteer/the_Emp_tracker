@@ -113,6 +113,13 @@ addDepartment = async () => {
 };
 
 // Function to View all Roles
+async function viewEmployees() {
+  let employeeData = await dbQuery.viewEmployees();
+  console.table(employeeData[0]);
+  mainMenu();
+};
+
+// Function to View all Roles
 async function viewRoles() {
   let roleData = await dbQuery.viewRoles();
   console.table(roleData[0]);
@@ -154,8 +161,18 @@ addJobRole = async () => {
 };
 
 // Function to Add a New Employee
-addEmployee = () => {
-  return inquirer.prompt([
+addEmployee = async () => {
+  try {
+    let roleArr = await dbQuery.viewRoles();
+    roleOpt = roleArr[0].map(x => x.Title);
+    console.log(roleOpt);
+    let mngrArr = await dbQuery.viewManagers();
+    console.log(mngrArr);
+    //   if(x.manager_id == null) {
+    //     x.concat(x.first_name,"",x.last_name)}
+
+    // );
+    const answers = await inquirer.prompt([
     {
       type: "input",
       name: "firstName",
@@ -170,19 +187,23 @@ addEmployee = () => {
       type: "list",
       name: "empRole",
       message: "What is the Employee's Role?",
-      choices: [""],
-      validate:validateInput,
-      }, {
-      type: "list",
-      name: "manager",
-      message: "Who is the Employee's Manager?",
+      choices: roleOpt,
       validate:validateInput,
       },
-  ]).then((answers)=> {
-    const employee = new employee(answers.firstName, answers.lastName, answers.role, answers.manager);
-    
-      mainMenu();
-    })
+      // {
+      // type: "list",
+      // name: "manager",
+      // message: "Who is the Employee's Manager?",
+      // choices: mngrOpt,
+      // validate:validateInput,
+      // },
+  ]);
+    console.log(answers);
+    await dbQuery.addEmployee(answers);
+  } catch (err) {
+    console.log(err);
+  };
+    mainMenu();
 };
 
 // Function to update an existing Employee's Role
