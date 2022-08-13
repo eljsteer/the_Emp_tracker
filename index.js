@@ -76,7 +76,7 @@ function mainMenu() {
           deleteFunc();
           break;
         case 'Quit':
-          dbConnect.exit();
+          dbConnect.quit();
           console.log("Thank you, See you later")
           break;
       };
@@ -249,13 +249,13 @@ updateEmpRole = async () => {
       validate: validateInput,
       }, {
       type: "list",
-      name: "empRole_id",
+      name: "role_id",
       message: "What is the Role that you want to assign to the employee?",
       choices: roleListOpt, 
       validate: validateInput,
       },
   ]);
-    await dbQuery.updateEmployeeRole(answers);
+    await dbQuery.updateEmployeeRole(answers.employee_id, answers.role_id);
     console.log(` Updated the Job role`);
   } catch (err) {
   console.log(err);
@@ -269,7 +269,6 @@ async function exit() {
 };
 
 // const Name = await dbQuery.function();
-
 
 function init() {
   mainMenu();
