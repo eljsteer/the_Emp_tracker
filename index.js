@@ -26,10 +26,10 @@ function mainMenu() {
         "Add a Role", 
         "Update Employees Role",
         "Delete an Employee, Role or Department",
-        "Update Employees Managers",
-        "View Employees by Manager",
-        "View Employees by Department",
-        "View Department by Budget",
+        // "Update Employees Managers",
+        // "View Employees by Manager",
+        // "View Employees by Department",
+        //"View Department by Budget",
         new inquirer.Separator(),
         "Quit",
         new inquirer.Separator()
@@ -63,20 +63,20 @@ function mainMenu() {
         case 'Delete an Employee, Role or Department':
           deleteCategory();
           break;
-        case 'Update Employees Managers':
-          updateEmpManager();
-          break;
-        case 'View Employees by Manager':
-          viewEmpByMgmt();
-          break;
-        case 'View Employees by Department':
-          viewEmpByDep();
-          break;
-        case 'View Department Budget':
-          depBudget();
-          break;
+        // case 'Update Employees Managers':
+        //   updateEmpManager();
+        //   break;
+        // case 'View Employees by Manager':
+        //   viewEmpByMgmt();
+        //   break;
+        // case 'View Employees by Department':
+        //   viewEmpByDep();
+        //   break;
+        // case 'View Department Budget':
+        //   depBudget();
+        //   break;
         case 'Quit':
-          dbConnect.quit();
+          dbConnect.end();
           console.log("Thank you, See you later")
           break;
       };
@@ -370,8 +370,13 @@ deleteCategory = async () => {
     mainMenu();
   };
 
-// async function exit() {
-//   return prompt.ui.close();
+//   // Function to View all Roles
+// async function depBudget() {
+//   let Budget = await dbQuery.getBudget();
+//   console.log("====================================");
+//   console.table(Budget[0]);
+//   console.log("====================================");
+//   mainMenu();
 // };
 
 function init() {
