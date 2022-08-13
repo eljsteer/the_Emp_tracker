@@ -133,7 +133,10 @@ addDepartment = async () => {
 addJobRole = async () => {
   try {
   let depArr = await dbQuery.viewDepartments();
-  depOpt = depArr[0].map(x => x.dep_name);
+  depOpt = depArr[0].map(x => ({
+    name:x.Department,
+    value:x.id
+  }));
   const answers = await inquirer.prompt([
     {
       type: "input",
@@ -168,10 +171,19 @@ addJobRole = async () => {
 addEmployee = async () => {
   try {
     let roleArr = await dbQuery.viewRoles();
-    roleOpt = roleArr[0].map(x => x.Title);
+    roleOpt = roleArr[0].map(x => ({
+      name:x.Title,
+      value:x.id
+    }));
     let mngrArr = await dbQuery.viewManagers();
-    mngrOpt = mngrArr[0].map(x => x.ManagerName);
-    mngrOpt.push("None");
+    mngrOpt = mngrArr[0].map(x => ({
+      name:x.ManagerName,
+      value:x.id
+    }));
+    mngrOpt.push({
+      name:"None",
+      value:null
+    });
 
     const answers = await inquirer.prompt([
     {
@@ -199,20 +211,8 @@ addEmployee = async () => {
       validate:validateInput,
       },
   ]);
-    console.log(answers);
-    if(answers.empRole == roleArr[0].Title) {
-      const index = roleArr[0].indexOf(answers.empRole == roleArr.Title);
-      answers.splice(index,1,roleArr[0].id);
-    };
-    console.log(answers)
-    if(answers.manager === "None") {
-      answers.manager = "";
-    } else if (answers.manager = mngrArr[0].ManagerName) {
-      answers.manager = mngrArr[0].id;
-    };
-    console.log(answers);
     await dbQuery.addEmployee(answers);
-    console.log(`Added ${concat(answers.firstName, answers.lastName)} to the Database`);
+    console.log(`Added ${(answers.firstName +""+ answers.lastName)} to the Database`);
   } catch (err) {
     console.log(err);
   };
