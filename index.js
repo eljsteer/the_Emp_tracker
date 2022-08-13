@@ -201,8 +201,8 @@ addEmployee = async () => {
   ]);
     console.log(answers);
     if(answers.empRole == roleArr[0].Title) {
-      answers.empRole = roleArr[0].map(function(item) {
-        return item == answers.empRole ? roleArr.id : item});
+      const index = roleArr[0].indexOf(answers.empRole == roleArr.Title);
+      answers.splice(index,1,roleArr[0].id);
     };
     console.log(answers)
     if(answers.manager === "None") {
