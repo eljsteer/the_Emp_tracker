@@ -308,7 +308,6 @@ deleteCategory = async () => {
       }, 
     ]);
     delData.category = "dep";
-    console.log(delData);
     await dbQuery.deleteDRE(delData);
     console.log(` Deleted the Department with ID: ${delData.department_id}`);
     } catch (err) {
