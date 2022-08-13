@@ -8,9 +8,7 @@
   - [Description](#description)
   - [Installation](#Installation)
   - [Usage](#Usage)
-  - [Tests](#Tests)
   - [License](#License)
-  - [Contributors](#Contributors)
   - [Credits](#Credits)
   - [Questions](#Questions)
 
@@ -20,24 +18,14 @@
   
   ## INSTALLATION
   1. Install NodeJS here: [Download NodeJS](https://nodejs.org/en/download/)
-  2. To install the NPM "Inquirer" package software to run the inquirer prompts, Type `npm install inquirer@8.2.4` in the command line to install associated npm packages and node modules to be able to call prompt queries for data to populate the Employee details and html layout.
-  3. To install Jest for testing, Type `npm install Jest` in the command line.
+  2. To install the required NPM packages to run the inquirer prompts, and other functionalies Type `npm install` in the command line to install associated npm packages and node modules to be able to run the inquirer prompts, dipslay the MySQL data in tables and to run the application
 
   ## USAGE
-  * To run this node application, type `node index.js` to run prompts to add employees
+  * To run this node application, type `node index.js` or `npm start` to run prompts to navigate through the application.
+  * To Quit the application once you have started either press "ctrl + c" or select "QUIT" from the inquirer prompts in the main menu
   * Link to Video an example of usage: 
-  [Usage Walkthrough Video](https://drive.google.com/file/d/14HeszosZ9DWsiRM-VMVC3M6rbq2m126B/view)
 
-  ## MEDIA
-  #### Screenshot of Sample Application Output
-  ![Profile Generator Output Screenshot](../public/media/profGenie-Screenshot.jpg)
-
-  ## TESTS
-  * To test this application, the test files can be found in the "tests" folder. Tests are run using "Jest", see installation on how to install Jest. 
-  * Type `npm run test` to run the tests.
-  * Link to Video of running tests: 
-  [Test Walkthrough Video](https://drive.google.com/file/d/1AVyI4kPKufYB8W0siLwizYJo8GMaK9lg/view)
-
+  ##### [Usage Walkthrough Video](https://drive.google.com/file/d/1z0tKl4ZSPdOAvZRhpgR6dT_brOgL--Md/view)
   
   ## LICENSE
   Project developed 2022 by Jason Steer,<br />
@@ -46,8 +34,6 @@
   ## CREDITS
   * https://github.com/sidorares/node-mysql2/blob/master/documentation/Promise-Wrapper.md
   * https://www.mysqltutorial.org/mysql-alias/
-  * https://nodejs.org/docs/latest-v16.x/api/fs.html#fspromiseswritefilefile-data-options
-
 
   ## QUESTIONS
   For any questions on this project please contact me via my Github link or email.<br />
