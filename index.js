@@ -43,7 +43,7 @@ function mainMenu() {
           viewDep();
           break;
         case 'View All Employees':
-          viewEmployees();
+          viewAllEmployees();
           break;
         case 'View All Roles':
           viewRoles();
@@ -76,7 +76,8 @@ function mainMenu() {
           deleteFunc();
           break;
         case 'Quit':
-          exit();
+          dbConnect.exit();
+          console.log("Thank you, See you later")
           break;
       };
     });
@@ -89,24 +90,27 @@ function mainMenu() {
 // Function to View All Departments
 async function viewDep() {
   let depData = await dbQuery.viewDepartments();
-  console.log("\n");
+  console.log("====================================");
   console.table(depData[0]);
+  console.log("====================================");
   mainMenu();
 };
 
 // Function to View all Roles
 async function viewRoles() {
   let roleData = await dbQuery.viewRoles();
-  console.log("\n");
+  console.log("====================================");
   console.table(roleData[0]);
+  console.log("====================================");
   mainMenu();
 };
 
 // Function to View all Employees
-async function viewEmployees() {
-  let employeeData = await dbQuery.viewEmployees();
-  console.log("\n");
+async function viewAllEmployees() {
+  let employeeData = await dbQuery.viewAllEmployees();
+  console.log("====================================");
   console.table(employeeData[0]);
+  console.log("====================================");
   mainMenu();
 };
 
@@ -126,6 +130,7 @@ addDepartment = async () => {
   } catch (err) {
     console.log(err);
   };
+  console.log("====================================");
   mainMenu();
 };
 
@@ -164,6 +169,7 @@ addJobRole = async () => {
   } catch (err) {
     console.log(err);
   };
+  console.log("====================================");
   mainMenu();
 };
 
@@ -216,21 +222,46 @@ addEmployee = async () => {
   } catch (err) {
     console.log(err);
   };
-    mainMenu();
+  console.log("====================================");
+  mainMenu();
 };
 
 // Function to update an existing Employee's Role
-updateEmployeeRole = () => {
-  return inquirer.prompt([
+updateEmpRole = async () => {
+  try {
+  let employArr = await dbQuery.employeeOptions();
+    employListOpt = employArr[0].map(x => ({
+      name:x.Employee,
+      value:x.id
+  }));
+  let roleArr = await dbQuery.viewRoles();
+    roleListOpt = roleArr[0].map(x => ({
+      name:x.Title,
+      value:x.id
+    }));
+
+  const answers = await inquirer.prompt([
     {
       type: "list",
-      name: "updEmpRole",
-      message: "What is the Role that you want to assign to the employee?", 
+      name: "employee_id",
+      message: "Which Employee do you want to Update?",
+      choices: employListOpt,
+      validate: validateInput,
+      }, {
+      type: "list",
+      name: "empRole_id",
+      message: "What is the Role that you want to assign to the employee?",
+      choices: roleListOpt, 
       validate: validateInput,
       },
-  ]).then((answers)=> {
-    mainMenu();
-  })
+  ]);
+    await dbQuery.updateEmployeeRole(answers);
+    console.log(` Updated the Job role`);
+  } catch (err) {
+  console.log(err);
+  };
+  console.log("====================================");
+  mainMenu();
 };
 
 async function exit() {
