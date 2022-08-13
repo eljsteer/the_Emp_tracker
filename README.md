@@ -25,7 +25,7 @@
   * To Quit the application once you have started either press "ctrl + c" or select "QUIT" from the inquirer prompts in the main menu
   * Link to Video an example of usage: 
 
-  ##### [Usage Walkthrough Video](https://drive.google.com/file/d/1z0tKl4ZSPdOAvZRhpgR6dT_brOgL--Md/view)
+  #### [Usage Walkthrough Video](https://drive.google.com/file/d/1z0tKl4ZSPdOAvZRhpgR6dT_brOgL--Md/view)
   
   ## LICENSE
   Project developed 2022 by Jason Steer,<br />
