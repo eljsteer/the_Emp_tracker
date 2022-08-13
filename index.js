@@ -170,9 +170,8 @@ addEmployee = async () => {
     let roleArr = await dbQuery.viewRoles();
     roleOpt = roleArr[0].map(x => x.Title);
     let mngrArr = await dbQuery.viewManagers();
-    mngrOpt = mngrArr[0]
-    // .map(x => x.ManagerName);
-    console.log(mngrOpt);
+    mngrOpt = mngrArr[0].map(x => x.ManagerName);
+    mngrOpt.push("None");
 
     const answers = await inquirer.prompt([
     {
@@ -200,6 +199,17 @@ addEmployee = async () => {
       validate:validateInput,
       },
   ]);
+    console.log(answers);
+    if(answers.empRole == roleArr[0].Title) {
+      answers.empRole = roleArr[0].map(function(item) {
+        return item == answers.empRole ? roleArr.id : item});
+    };
+    console.log(answers)
+    if(answers.manager === "None") {
+      answers.manager = "";
+    } else if (answers.manager = mngrArr[0].ManagerName) {
+      answers.manager = mngrArr[0].id;
+    };
     console.log(answers);
     await dbQuery.addEmployee(answers);
     console.log(`Added ${concat(answers.firstName, answers.lastName)} to the Database`);
