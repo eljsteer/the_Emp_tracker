@@ -25,11 +25,11 @@ function mainMenu() {
         "Add an Employee",
         "Add a Role", 
         "Update Employees Role",
+        "Delete an Employee, Role or Department",
         "Update Employees Managers",
         "View Employees by Manager",
         "View Employees by Department",
         "View Department by Budget",
-        "Delete an Employee, Role or Department",
         new inquirer.Separator(),
         "Quit",
         new inquirer.Separator()
@@ -60,6 +60,9 @@ function mainMenu() {
         case 'Update Employees Role':
           updateEmpRole();
           break;
+        case 'Delete an Employee, Role or Department':
+          deleteCategory();
+          break;
         case 'Update Employees Managers':
           updateEmpManager();
           break;
@@ -71,9 +74,6 @@ function mainMenu() {
           break;
         case 'View Department Budget':
           depBudget();
-          break;
-        case 'Delete an Employee, Role or Department':
-          deleteFunc();
           break;
         case 'Quit':
           dbConnect.quit();
@@ -263,12 +263,116 @@ updateEmpRole = async () => {
   console.log("====================================");
   mainMenu();
 };
+// Function to Delete any Department, Role or Employee
+deleteCategory = async () => {
+  const delCatOptions = await inquirer.prompt([
+  {
+    type: "list",
+    name: "delCategory",
+    message: "What Cateogry would you like To Delete?", 
+    choices: [
+      "Delete a Department",
+      "Delete an Employee", 
+      "Delete a Role",
+    ],
+    validate: validateInput,
+  }])
+    .then(delOptions => {
+      switch (delOptions.delCategory) {
+        case "Delete a Department":
+          delDep();
+          break;
+        case "Delete an Employee":
+          delEmp();
+          break;
+        case "Delete a Role":
+          delRole();
+          break;
+        };
+    });
+};  
+  delDep = async () => {
+    try {
+      let depArr = await dbQuery.viewDepartments();
+      depListOpt = depArr[0].map(x => ({
+        name:x.Department,
+        value:x.id,
+    }));
+    const delData = await inquirer.prompt([
+      {
+      type: "list",
+      name: "department_id",
+      message: "Which Department would you like to Delete?",
+      choices: depListOpt,
+      validate: validateInput,
+      }, 
+    ]);
+    delData.category = "dep";
+    console.log(delData);
+    await dbQuery.deleteDRE(delData);
+    console.log(` Deleted the Department with ID: ${delData.department_id}`);
+    } catch (err) {
+    console.log(err);
+    };
+    console.log("====================================");
+    mainMenu();
+  };
 
-async function exit() {
-  return prompt.ui.close();
-};
+  delEmp = async () => {
+    try {
+      let employArr = await dbQuery.employeeOptions();
+      empListOpt = employArr[0].map(x => ({
+        name:x.Employee,
+        value:x.id
+    }));
+    const delData = await inquirer.prompt([
+      {
+      type: "list",
+      name: "employee_id",
+      message: "Which Employee would you like to Delete?",
+      choices: empListOpt,
+      validate: validateInput,
+      }, 
+    ]);
+    delData.category = "emp";
+    await dbQuery.deleteDRE(delData);
+    console.log(` Deleted the Employee with ID: ${delData.employee_id}`);
+    } catch (err) {
+    console.log(err);
+    };
+    console.log("====================================");
+    mainMenu();
+  };
 
-// const Name = await dbQuery.function();
+  delRole = async () => {
+    try {
+      let roleArr = await dbQuery.viewRoles();
+      roleListOpt = roleArr[0].map(x => ({
+        name:x.Title,
+        value:x.id
+    }));
+    const delData = await inquirer.prompt([
+      {
+      type: "list",
+      name: "role_id",
+      message: "Which Role would you like to Delete?",
+      choices: roleListOpt,
+      validate: validateInput,
+      }, 
+    ]);
+    delData.category = "role";
+    await dbQuery.deleteDRE(delData);
+    console.log(` Deleted the Role with ID: ${delData.role_id}`);
+    } catch (err) {
+    console.log(err);
+    };
+    console.log("====================================");
+    mainMenu();
+  };
+
+// async function exit() {
+//   return prompt.ui.close();
+// };
 
 function init() {
   mainMenu();
